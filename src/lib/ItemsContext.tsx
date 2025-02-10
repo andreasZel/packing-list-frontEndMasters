@@ -4,7 +4,7 @@ import { createItem, filterItems, getInitialItems, removeItem, updateItem } from
 type ItemState = {
     items: Item[];
     add: (name: string) => void;
-    update: (id: string, updates: any) => void;
+    update: (id: string, updates: Omit<Partial<Item>, 'id'>) => void;
     remove: (id: string) => void;
     markAllAsUnpacked: () => void;
     unpackedItems: Item[];
@@ -21,7 +21,7 @@ export const ItemsProvider = ({ children }: PropsWithChildren) => {
         setItems([...items, item]);
     };
 
-    const update = (id: string, updates: any) => {
+    const update = (id: string, updates: Omit<Partial<Item>, 'id'>) => {
         setItems(updateItem(items, id, updates));
     };
 

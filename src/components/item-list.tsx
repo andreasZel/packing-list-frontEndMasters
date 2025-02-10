@@ -1,20 +1,24 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { filterItems } from '../lib/items';
 import { toKebabCase } from '../lib/kebab-case';
 import Item from './item';
+import { ItemsContext } from '../lib/ItemsContext';
 
-const EmptyState = ({ id, items, filteredItems }) => (
+const EmptyState = ({ id, items, filteredItems }: { id: string, items: Item[], filteredItems: Item[] }) => (
   <p id={id} className="text-primary-400">
     (No items.)
   </p>
 );
 
-const ItemList = ({ title = 'Items', items, update, remove }) => {
+const ItemList = ({ title = 'Items', items }: { title: string, items: Item[] }) => {
   const [filter, setFilter] = useState('');
   const id = toKebabCase(title);
 
   const filteredItems = filterItems(items, { name: filter });
   const isEmpty = !items.length;
+
+  const { update, remove } = useContext(ItemsContext);
+
 
   return (
     <section id={id} className="w-full p-4 border-2 border-primary-200">
